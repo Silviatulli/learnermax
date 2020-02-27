@@ -3,7 +3,7 @@ import rospy
 import sys
 import copy as cp
 from src.utils import *
-from minmax.srv import *
+from minmax_pomdp.srv import *
 
 NODE_NAME = 'minmax_planning_manager'
 
