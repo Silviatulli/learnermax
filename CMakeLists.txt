@@ -63,6 +63,7 @@ add_service_files(
    Plan.srv
    RobotExplanation.srv
    RobotTalk.srv
+   PomdpAction.srv
  )
 
 ## Generate actions in the 'action' folder

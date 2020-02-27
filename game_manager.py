@@ -19,9 +19,10 @@ NODE_NAME = 'minmax_game_module'
 Module responsible for the Game
 """
 
+pomdp_dic = {'no-action':0, 'interactive-tutorial':1, 'worked-example':2, 'hint':3, 'think-aloud':4, 'break':5}
 
 
-def test_command_line_sequence(param_file, self):
+def test_command_line_sequence(self, param_file):
     #read in params
     #pdb.set_trace()
 
@@ -128,44 +129,47 @@ def test_command_line_sequence(param_file, self):
     num_states_per_knowledge_level = num_engagement_levels * num_attempts
     problem_num = 1
     attempt_num = 1
-    receiving_obs = True
-    observations = ['W-fast', 'R-slow', 'W-med']
+    #receiving_obs = True
+    observations = ['R-fast', 'R-med', 'R-slow', 'W-fast', 'W-med', 'W-slow']
     for obs in observations:
         #while receiving_obs is True:
-            #obs = raw_input("Enter observation: ")
-            #obs = ("W-fast")
-            #if obs == "done":
-                #receiving_obs = False
-                #break
-            #if obs not in all_obs:
-                #print "Invalid observation provided\n"
-                #continue
-            knowledge_level_index = 0
-            action = simple_pomdp_graph_policy_belief_runner.get_action()
-            current_belief = simple_pomdp_graph_policy_belief_runner.step(obs)
-            print "\nProblem %i, Attempt %i: (%s, %s)" % (problem_num, attempt_num, action, obs)
+        obs = random.choice(observations)
+        #raw_input("Enter observation: ")
+        if obs == "done":
+            receiving_obs = False
+            break
+        if obs not in all_obs:
+            print "Invalid observation provided\n"
+            continue
+        knowledge_level_index = 0
+        action = simple_pomdp_graph_policy_belief_runner.get_action()
+        current_belief = simple_pomdp_graph_policy_belief_runner.step(obs)
+        print "\nProblem %i, Attempt %i: (%s, %s)" % (problem_num, attempt_num, action, obs)
 
 
-            belief_str = ""
-            sum_across_states = 0.0
-            for k in range(num_states):
-                sum_across_states += current_belief[k]
-                if k % num_attempts == num_attempts - 1:
-                    belief_str += "%s: %.3f\t\t" % (all_states[k][:-3], sum_across_states)
-                    knowledge_level_index += 1
-                    sum_across_states = 0.0
-                if k % num_states_per_knowledge_level == num_states_per_knowledge_level-1:
-                    belief_str += "\n"
+        belief_str = ""
+        sum_across_states = 0.0
+        for k in range(num_states):
+            sum_across_states += current_belief[k]
+            if k % num_attempts == num_attempts - 1:
+                belief_str += "%s: %.3f\t\t" % (all_states[k][:-3], sum_across_states)
+                knowledge_level_index += 1
+                sum_across_states = 0.0
+            if k % num_states_per_knowledge_level == num_states_per_knowledge_level-1:
+                belief_str += "\n"
 
-            print belief_str
-            self.pomdp_action = action
-            print(self.pomdp_action)
+        print belief_str
+        self.pomdp_action = action
+        # list out keys and values separately
+        self.key_list = list(pomdp_dic.keys())
+        self.val_list = list(pomdp_dic.values())
+        print(self.val_list[self.key_list.index(self.pomdp_action)])
 
-            if "R" in obs or attempt_num == 3:
-                problem_num += 1
-                attempt_num = 1
-            else:
-                attempt_num += 1
+        if "R" in obs or attempt_num == 3:
+            problem_num += 1
+            attempt_num = 1
+        else:
+            attempt_num += 1
 
 
         #print(pomdp_action)
@@ -192,6 +196,8 @@ class GameManager:
 
         # Services
         self.game_to_manager_service = rospy.Service('game_to_manager_service', GameState, self.handle_game_to_manager)
+        self.get_pomdp_action = rospy.Service('get_pomdp_action', PomdpAction, self.handle_pomdp_action)
+
         rospy.wait_for_service('decision_service')
         rospy.wait_for_service('robot_talk_service')
         rospy.wait_for_service('manager_to_game_service')
@@ -430,8 +436,7 @@ class GameManager:
 
             #Generate POMDP actions
             if len(sys.argv) > 1:
-                 pm = test_command_line_sequence(sys.argv[1],self)
-                 print("I am printing the pomdp", self.pomdp_action)
+                 pm = test_command_line_sequence(self, sys.argv[1])
             else:
                 print "please provide the name of the input parameter file as a command line argument"
 
@@ -444,6 +449,8 @@ class GameManager:
         self.robot_to_child_turn()
         return
 
+    def handle_pomdp_action(self, req):
+        return self.val_list[self.key_list.index(self.pomdp_action)]
 
 
 

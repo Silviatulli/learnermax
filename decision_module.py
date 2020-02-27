@@ -46,9 +46,6 @@ class DecisionManager:
         except rospy.ServiceException, e:
             print "Service call failed: %s" % e
 
-        rospy.loginfo("[")
-
-
     def handle_decision_service(self, req):
 
         # Reads the request
@@ -58,7 +55,6 @@ class DecisionManager:
         min_ball_1 = req.minimizer_ball_1
         max_ball_0 = req.maximizer_ball_0
         max_ball_1 = req.maximizer_ball_1
-
 
         # If it is an optimal action, we just get the best action:
         if optimal_action:
@@ -148,14 +144,12 @@ class DecisionManager:
 
 
     def handle_robot_talk_service(self, req):
-
         # Read the request:
         speech_type = req.speech_type
 
         # If we want the robot to explain the move
         if speech_type == 0:
             # Create service message to send to robot
-
             rexplan_request = RobotExplanationRequest()
             rexplan_request.depth = self.max_depth
             rexplan_request.ball = self.ball
@@ -164,8 +158,7 @@ class DecisionManager:
             rexplan_request.best_ball = self.best_ball
             rexplan_request.best_action = self.best_action
             rexplan_request.best_score = self.best_score
-            rexplan_request.pomdp_action = self.pomdp_action
-            pdb.set_trace()
+
             # Call the robot explanation service and wait for response
             rexplan_resp = self.robot_explanation_proxy.call(rexplan_request)
 
