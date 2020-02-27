@@ -1,4 +1,4 @@
-# Minmax Game and POMDP for Learner-Aware Explanations
+# Minmax POMDP
 
 1) Install ROS melodic and catkin following this link: https://wiki.ros.org/catkin#Installing_catkin
 2) Clone the repository 
