@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>minmax</name>
+  <name>minmax_pomdp</name>
   <version>0.0.0</version>
   <description>The minmax package</description>
 
