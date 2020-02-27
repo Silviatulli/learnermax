@@ -3,7 +3,7 @@
 import rospy
 import sys
 from src.utils import *
-from minmax.srv import *
+from minmax_pomdp.srv import *
 #from naoqi import ALProxy, ALBroker, ALModule
 import pdb
 
