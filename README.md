@@ -36,8 +36,7 @@ Create a folder sdk that contains the pynaoqi sdk required and modify your bashr
 7) you can download the pynaoqi sdk following this guide: http://wiki.ros.org/nao/Tutorials/Installation
 
 8) Launch the code: 
-- open a terminal and launch: $ roscore
-- open a second terminal into your repository folder and launch minmax.launch: $ roslaunch minmax.launch
+- open a second terminal launch minmaxpomdp.launch: $ roslaunch minmax.launch
 
 # POMDP dependencies
 1) Install numpy.
