@@ -3,7 +3,7 @@ import rospy
 from std_srvs.srv import Empty
 import sys
 from src.utils import *
-from minmax.srv import *
+from minmax_pomdp.srv import *
 import pygame as pg
 import pygame.locals
 import math
