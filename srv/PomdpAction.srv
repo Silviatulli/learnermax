@@ -1,2 +1,2 @@
 ---
-string pomdp_action
+int64 pomdp_action
