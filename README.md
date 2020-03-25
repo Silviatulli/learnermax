@@ -1,9 +1,10 @@
 # Minmax POMDP
 
+#ROS config
+
 1) Install ROS melodic and catkin following this link: https://wiki.ros.org/catkin#Installing_catkin
 2) Clone the repository 
     - $ git clone https://github.com/Silviatulli/minmax.git 
-    - add an __init__.py file into the folders srv and src for simplifying the research of the folders' content 
 2) Remember to make the python files executable by running the following command for each script:
     - $ chmod +x filename.py
 3) Build a catkin workspace and source the setup file run:
@@ -36,7 +37,10 @@ Create a folder sdk that contains the pynaoqi sdk required and modify your bashr
 7) you can download the pynaoqi sdk following this guide: http://wiki.ros.org/nao/Tutorials/Installation
 
 8) Launch the code: 
-- open a second terminal launch minmaxpomdp.launch: $ roslaunch minmax.launch
+- open a terminal and launch: $ roscore
+- open a second terminal into your repository folder and launch minmax.launch: $ roslaunch minmax.launch
+
+if you have any doubts please do not hesitate to contact me by e-mail
 
 # POMDP dependencies
 1) Install numpy.
