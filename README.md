@@ -1,4 +1,4 @@
-# Minmax POMDP
+# Learnermax
 
 #ROS config
 
